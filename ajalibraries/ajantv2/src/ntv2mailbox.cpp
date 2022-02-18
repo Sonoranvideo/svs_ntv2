@@ -93,8 +93,11 @@ bool CNTV2MailBox::sendMsg(uint32_t timeout)
 
 bool CNTV2MailBox::sendMsg(char * msg, uint32_t timeout)
 {
+	char *const Tgt = (char*)txBuf;
+
 	// make local safe copy
-	strncpy((char*)txBuf,msg,sizeof(txBuf));
+	strncpy(Tgt, msg, sizeof(txBuf) - 1);
+	Tgt[sizeof(txBuf) - 1] = '\0';
 
 	return sendMsg(timeout);
 }
